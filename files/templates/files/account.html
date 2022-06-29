@@ -1,0 +1,15 @@
+{% extends "files/templates/files/file_base.html" %}
+
+{% block title %} Afyle - Files {% endblock %}
+
+{% block content %}
+
+<h1> Afyle </h1>
+
+
+
+<p>username: {{user.get_username}} </p>
+<p>email: {{ user.email }} </p>
+<p>password: <a href="/password_change">change password</a></p>
+
+{% endblock %}
