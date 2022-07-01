@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'afyle.urls'
@@ -144,7 +145,11 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
+CSP_INCLUDE_NONCE_IN=['script-src', 'style-src']
 CSP_STYLE_SRC = ["'self'","stackpath.bootstrapcdn.com", "www.w3schools.com", "cdnjs.cloudflare.com","code.jquery.com"]
 CSP_SCRIPT_SRC = ["'self'", "stackpath.bootstrapcdn.com", "cdnjs.cloudflare.com", "code.jquery.com","www.w3schools.com"]
 CSP_IMG_SRC = ["'self'","cdnjs.cloudflare.com","code.jquery.com","www.w3schools.com","stackpath.bootstrapcdn.com"]
 CSP_FONT_SRC = ["'self'", "cdnjs.cloudflare.com"]
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
