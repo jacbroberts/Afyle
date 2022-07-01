@@ -149,7 +149,7 @@ CSP_INCLUDE_NONCE_IN=['script-src', 'style-src']
 CSP_STYLE_SRC = ["'self'","https://stackpath.bootstrapcdn.com", "https://www.w3schools.com", "https://cdnjs.cloudflare.com","https://code.jquery.com"]
 CSP_SCRIPT_SRC = ["'self'", "https://stackpath.bootstrapcdn.com", "https://cdnjs.cloudflare.com", "https://code.jquery.com","https://www.w3schools.com"]
 CSP_IMG_SRC = ["'self'","https://cdnjs.cloudflare.com","https://code.jquery.com","https://www.w3schools.com","https://stackpath.bootstrapcdn.com"]
-
+CSP_FONT_SRC = ["'self'", "https://cdnjs.cloudflare.com"]
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
