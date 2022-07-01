@@ -137,15 +137,14 @@ LOGIN_REDIRECT_URL = "/files"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "/login"
 
-SECURE_HSTS_SECONDS = 2_592_000
+SECURE_HSTS_SECONDS = 31_536_000 #one year
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
-CSP_DEFAULT_SRC=["'self'","cdnjs.cloudflare.com"]
 CSP_STYLE_SRC = ["'self'","stackpath.bootstrapcdn.com", "www.w3schools.com", "cdnjs.cloudflare.com","code.jquery.com"]
-CSP_SCRIPT_SRC = ["'self'","'unsafe-inline'","'unsafe-eval'", "stackpath.bootstrapcdn.com", "cdnjs.cloudflare.com", "code.jquery.com","www.w3schools.com"]
+CSP_SCRIPT_SRC = ["'self'", "stackpath.bootstrapcdn.com", "cdnjs.cloudflare.com", "code.jquery.com","www.w3schools.com"]
 CSP_IMG_SRC = ["'self'","cdnjs.cloudflare.com","code.jquery.com","www.w3schools.com","stackpath.bootstrapcdn.com"]
 CSP_FONT_SRC = ["'self'", "cdnjs.cloudflare.com"]

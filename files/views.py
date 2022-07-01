@@ -11,6 +11,12 @@ def index(request):
 def about(request):
     return render(request, 'files/about.html')
 
+def privacy(request):
+    return render(request, 'files/privacy.html')
+
+def terms(request):
+    return render(request, 'files/terms_and_conditions.html')
+
 def register(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST)
@@ -32,3 +38,4 @@ def files(request):
 @login_required
 def account(request):
     return render(request, 'files/account.html')
+
