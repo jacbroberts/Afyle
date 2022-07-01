@@ -17,7 +17,7 @@
             <a href="/about">About</a>
             <a href="/login">Login</a>
             <a href="/register">Register</a>
-            <a href="javascript:void(0);" class="icon" onclick="expand()">
+            <a nonce="nonce-{{request.csp_nonce}}" href="javascript:void(0);" class="icon" onclick="expand()">
                 <i class="fa fa-bars"></i>
             </a>
             </div>
