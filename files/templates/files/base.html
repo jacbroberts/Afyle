@@ -17,9 +17,15 @@
             <a href="/about">About</a>
             <a href="/login">Login</a>
             <a href="/register">Register</a>
-            <a nonce="{{request.csp_nonce}}" href="javascript:void(0);" class="icon" onclick="expand()">
+            <a id="burger" class="icon">
                 <i class="fa fa-bars"></i>
             </a>
+            <script nonce="{{request.csp_nonce}}">
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.getElementById('burger')
+                        .addEventListener('click', expand)
+                });
+            </script>
             </div>
         </header>
         {% if messages %}
