@@ -31,6 +31,16 @@ body {
     display: none;
 }
 
+.width20
+{
+    width: 20%;
+}
+
+.margin-left25
+{
+    margin-left: 25%;
+}
+
 
 @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {display: none;}
