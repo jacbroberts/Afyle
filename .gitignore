@@ -1,2 +1,4 @@
 .vscode
 .gitignore
+.DJANGO_SECRET_KEY
+db.sqlite3
