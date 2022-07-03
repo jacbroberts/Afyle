@@ -27,8 +27,11 @@ def register(request):
             
             form.save()
             #add to UserStorageData class
-            newUserStorageData = UserStorageData(user=form.cleaned_data.get("username"), files=["NULL"])
-            newUserStorageData.save()
+            try:
+                newUserStorageData = UserStorageData(user=form.cleaned_data.get("username"), files=["NULL"])
+                newUserStorageData.save()
+            except Exception as e:
+                print(e)
             return redirect("/")
         else:
             #messages.add_message(request, messages.ERROR, "Registration Unsuccessful")
