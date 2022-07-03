@@ -27,7 +27,7 @@ def register(request):
             
             form.save()
             #add to UserStorageData class
-            newUserStorageData = UserStorageData(user=form.user, files=["NULL"])
+            newUserStorageData = UserStorageData(user=form.username, files=["NULL"])
             newUserStorageData.save()
             return redirect("/")
         else:
