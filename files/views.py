@@ -27,7 +27,7 @@ def register(request):
             
             form.save()
             #add to UserStorageData class
-            newUserStorageData = UserStorageData(user=form.Meta.model.username, files=["NULL"])
+            newUserStorageData = UserStorageData(user=form.cleaned_data.get("username"), files=["NULL"])
             newUserStorageData.save()
             return redirect("/")
         else:
