@@ -21,7 +21,10 @@ def register(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST)
         if form.is_valid():
+            #first check if email is already used
+            
             form.save()
+            #add to UserStorageData class
             return redirect("/")
         else:
             #messages.add_message(request, messages.ERROR, "Registration Unsuccessful")
@@ -39,3 +42,7 @@ def files(request):
 def account(request):
     return render(request, 'files/account.html')
 
+def media_access(request, path):
+    access_granted = False
+    user = request.user
+    return render(request, "files/index.html")

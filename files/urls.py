@@ -8,6 +8,7 @@ urlpatterns = [
     path('terms', views.terms),
     path('register', views.register),
     path('files', views.files),
-    path('account', views.account)
+    path('account', views.account),
+    path(r'media/(?P<path>.*', views.media_access, name='media'),
 ]
 
