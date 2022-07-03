@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from files.models import UserStorageData
 from .forms import NewUserForm
 
 # Create your views here.
@@ -25,6 +27,8 @@ def register(request):
             
             form.save()
             #add to UserStorageData class
+            newUserStorageData = UserStorageData(user=form.user, files=["NULL"])
+            newUserStorageData.save()
             return redirect("/")
         else:
             #messages.add_message(request, messages.ERROR, "Registration Unsuccessful")

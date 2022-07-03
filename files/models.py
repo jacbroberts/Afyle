@@ -18,6 +18,9 @@ class UserStorageData(models.Model):
     bandwidth_download_max_kB = models.PositiveIntegerField(default=0)
 
     files = models.JSONField(null=False, default=list)
+
+    def __str__(self):
+        return self.user
     
 
     
