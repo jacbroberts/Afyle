@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from files.models import UserStorageData
 from .forms import NewUserForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -28,7 +29,8 @@ def register(request):
             form.save()
             #add to UserStorageData class
             try:
-                newUserStorageData = UserStorageData(user=form.cleaned_data.get("username"), files=["NULL"])
+                new_user = User.objects.get(username__exact=form.cleaned_data.get("username"))
+                newUserStorageData = UserStorageData(user=new_user, files=["NULL"])
                 newUserStorageData.save()
             except Exception as e:
                 print(e)
