@@ -20,7 +20,7 @@ class UserStorageData(models.Model):
     files = models.JSONField(null=False, default=list)
 
     def __str__(self):
-        return self.user
+        return self.user.username
     
 
     
