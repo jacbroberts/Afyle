@@ -69,7 +69,7 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            write_file(request.FILES['file'], 'test')
+            write_file(request.FILES['file'], request.user.get_username())
             return HttpResponseRedirect('/files')
         else:
             print("invalid form sent")
