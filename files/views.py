@@ -65,8 +65,6 @@ def write_file(file, user):
 
 @login_required
 def upload(request):
-    form = UploadFileForm()
-    '''
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -74,7 +72,6 @@ def upload(request):
             return HttpResponseRedirect('/files')
     else:
         form = UploadFileForm()
-    '''
         
     return render(request, 'files/upload.html', {"form":form})
 
