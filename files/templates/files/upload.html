@@ -1,0 +1,13 @@
+{% extends "files/templates/files/file_base.html" %}
+
+{% block title %} Afyle - Upload {% endblock %}
+
+{% block content %}
+
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Upload</button>
+</form>
+
+{% endblock %}

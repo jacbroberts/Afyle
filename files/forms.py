@@ -8,3 +8,13 @@ class NewUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField(required=True)
+    
+
+#         "name": "name",
+#         "upload_date": "jdl"
+#         "size": "size",
+#         "type": "type"

@@ -1,9 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from files.models import UserStorageData
-from .forms import NewUserForm
+from .forms import NewUserForm, UploadFileForm
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -27,13 +28,12 @@ def register(request):
             #first check if email is already used
             
             form.save()
+            
             #add to UserStorageData class
-            try:
-                new_user = User.objects.get(username__exact=form.cleaned_data.get("username"))
-                newUserStorageData = UserStorageData(user=new_user, files=["NULL"])
-                newUserStorageData.save()
-            except Exception as e:
-                print(e)
+            new_user = User.objects.get(username__exact=form.cleaned_data.get("username"))
+            newUserStorageData = UserStorageData(user=new_user, files=["NULL"])
+            newUserStorageData.save()
+            
             return redirect("/")
         else:
             #messages.add_message(request, messages.ERROR, "Registration Unsuccessful")
@@ -45,13 +45,29 @@ def register(request):
 #if logged in
 @login_required
 def files(request):
-    return render(request, 'files/files.html')
+    user_storage_data = UserStorageData.get(username__exact=request.user)
+    return render(request, 'files/files.html', {"userStorage":user_storage_data})
 
 @login_required
 def account(request):
-    return render(request, 'files/account.html')
+    user_storage_data = UserStorageData.get(username__exact=request.user)
+    return render(request, 'files/account.html', {"userStorage":user_storage_data})
 
 def media_access(request, path):
     access_granted = False
     user = request.user
     return render(request, "files/index.html")
+
+def write_file(file, user):
+    with open("/home/ubuntu/afyle/media/{user}", 'wb+') as destination:
+        for chunck in file.chunks():
+            destination.write(chunck)
+
+@login_required
+def upload(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            write_file(request.FILES['file'], request.user)
+            return HttpResponseRedirect('/files')
+    return render(request, 'files/upload.html', {"form":form})
