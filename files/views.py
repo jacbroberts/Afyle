@@ -45,12 +45,12 @@ def register(request):
 #if logged in
 @login_required
 def files(request):
-    user_storage_data = UserStorageData.get(user__exact=request.user.get_username)
+    user_storage_data = UserStorageData.get(user__exact=str(request.user))
     return render(request, 'files/files.html', {"userStorage":user_storage_data})
 
 @login_required
 def account(request):
-    user_storage_data = UserStorageData.get(user__exact=request.user.get_username)
+    user_storage_data = UserStorageData.get(user__exact=str(request.user))
     return render(request, 'files/account.html', {"userStorage":user_storage_data})
 
 def media_access(request, path):
