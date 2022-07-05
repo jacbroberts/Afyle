@@ -59,6 +59,7 @@ def media_access(request, path):
     return render(request, "files/index.html")
 
 def write_file(file, user):
+    print(user)
     with open("/home/ubuntu/afyle/media/{user}", 'wb+') as destination:
         for chunck in file.chunks():
             destination.write(chunck)
