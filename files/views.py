@@ -60,7 +60,7 @@ def media_access(request, path):
 
 def write_file(file, user):
     print(user)
-    with open("/home/ubuntu/afyle/media/{user}", 'wb+') as destination:
+    with open(f"/home/ubuntu/afyle/media/{user}", 'wb+') as destination:
         for chunck in file.chunks():
             destination.write(chunck)
 
