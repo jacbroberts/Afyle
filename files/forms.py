@@ -12,6 +12,7 @@ class NewUserForm(UserCreationForm):
 
 class UploadFileForm(forms.Form):
     file = forms.FileField(required=True)
+
     
 
 #         "name": "name",
