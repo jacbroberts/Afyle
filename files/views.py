@@ -70,4 +70,8 @@ def upload(request):
         if form.is_valid():
             write_file(request.FILES['file'], request.user)
             return HttpResponseRedirect('/files')
+    else:
+        form = UploadFileForm()
     return render(request, 'files/upload.html', {"form":form})
+
+
