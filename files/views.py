@@ -148,6 +148,7 @@ def download(request, id):
     username = user.get_username()
     for file in user.files:
         if username + "_" + file['name'] == id:
+            print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
             response['X-Accel-Redirect'] = f'{username}/{file_name}'
