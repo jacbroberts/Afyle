@@ -147,12 +147,13 @@ def download(request, username, filename):
     user = UserStorageData.objects.get(user=request.user)
     print(user.user)
     for file in user.files:
-        if file['name'] == filename and username == user.user:
+        print(file['name'])
+        if str(file['name']) == str(filename) and username == request.user.get_username():
             print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
             response['X-Accel-Redirect'] = f'/protected/{user.user}/{file_name}'
             return response
 
-    print("user found no files")
+    print(f"user found no files called {filename}")
     return HttpResponseRedirect('/files')
