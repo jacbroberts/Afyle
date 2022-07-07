@@ -145,11 +145,11 @@ def upload(request):
 @login_required
 def download(request, username, filename):
     user = UserStorageData.objects.get(user=request.user)
-    true_username = user.get_username()
+    
     for file in user.files:
-        if file['name'] == filename and username == true_username:
+        if file['name'] == filename and username == user.user:
             print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
-            response['X-Accel-Redirect'] = f'/protected/{true_username}/{file_name}'
+            response['X-Accel-Redirect'] = f'/protected/{user.user}/{file_name}'
             return response
