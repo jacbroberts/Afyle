@@ -143,11 +143,11 @@ def upload(request):
 
 
 @login_required
-def download(request, username, id):
+def download(request, username, filename):
     user = UserStorageData.objects.get(user=request.user)
     true_username = user.get_username()
     for file in user.files:
-        if file['name'] == id and username == true_username:
+        if file['name'] == filename and username == true_username:
             print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
