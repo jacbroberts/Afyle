@@ -147,7 +147,7 @@ def download(request, id):
     user = UserStorageData.objects.get(user=request.user)
     username = user.get_username()
     for file in user.files:
-        if username + " " + file['name'] == id:
+        if username + "_" + file['name'] == id:
             file_name = file['name']
             response = HttpResponse()
             response['X-Accel-Redirect'] = f'{username}/{file_name}'
