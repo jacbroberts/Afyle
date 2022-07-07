@@ -79,7 +79,10 @@ def write_file(file, user):
     }
 
     try:
+        if user_storage_data.files[0] == "NULL":
+            del user_storage_data.files[0]
         user_storage_data.files.append(new_file_entry)
+        user_storage_data.save()
         print(user_storage_data.files)
     except Exception as e:
         print(e)
@@ -99,7 +102,7 @@ def upload(request):
     if bandwidth_used >= bandwidth_max: 
         #upload is still allowed if the current file will go over upload quota
         allow_upload = False
-        pass
+        
 
     #check that user has not surpased storage usage quota
     storage_used = user_storage_data.storage_used_B
@@ -108,7 +111,7 @@ def upload(request):
         #upload still allowed if the current file will go over storage quota
             #after file size is checked, however, file will be discarded
         allow_upload = False
-        pass
+        
 
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
