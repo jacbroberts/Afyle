@@ -7,6 +7,8 @@ from files.models import UserStorageData
 from .forms import NewUserForm, UploadFileForm
 from django.contrib.auth.models import User
 
+import datetime
+
 # Create your views here.
 
 def index(request):
@@ -33,6 +35,8 @@ def register(request):
             new_user = User.objects.get(username__exact=form.cleaned_data.get("username"))
             newUserStorageData = UserStorageData(user=new_user, files=["NULL"])
             newUserStorageData.save()
+
+            #create directory in /home/ubuntu/afyle/media/<username>
             
             return redirect("/")
         else:
@@ -58,24 +62,75 @@ def media_access(request, path):
     user = request.user
     return render(request, "files/index.html")
 
+def revalidate_storage():
+    #check that actual storage usage matches db 
+    pass
+
 def write_file(file, user):
-    print(user)
-    with open(f"/home/ubuntu/afyle/Afyle/media/{user}/{file.name}", 'wb+') as destination:
+    user_storage_data = UserStorageData.objects.get(user__exact=user)
+    username = user.get_username()
+    print(username)
+
+    new_file_entry = {
+        "name": file.name,
+        "upload_data": datetime.time,
+        "size": file.size,
+        "type": file.content_type
+    }
+
+    try:
+        user_storage_data.files.append(new_file_entry)
+        print(user_storage_data.files)
+    except Exception as e:
+        print(e)
+    
+    with open(f"/home/ubuntu/afyle/media/{username}/{file.name}", 'wb+') as destination:
         for chunck in file.chunks():
             destination.write(chunck)
 
 @login_required
 def upload(request):
+    user_storage_data = UserStorageData.objects.get(user__exact=request.user)
+    allow_upload = True
+    
+    #check that user has not surpased upload bandwidth quota
+    bandwidth_used = user_storage_data.bandwidth_upload_used_kB
+    bandwidth_max = user_storage_data.bandwidth_upload_max_kB
+    if bandwidth_used >= bandwidth_max: 
+        #upload is still allowed if the current file will go over upload quota
+        allow_upload = False
+        pass
+
+    #check that user has not surpased storage usage quota
+    storage_used = user_storage_data.storage_used_B
+    storage_max = user_storage_data.storage_max_B
+    if storage_used >= storage_max:
+        #upload still allowed if the current file will go over storage quota
+            #after file size is checked, however, file will be discarded
+        allow_upload = False
+        pass
+
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            write_file(request.FILES['file'], request.user.get_username())
-            return HttpResponseRedirect('/files')
+            #check that file size does not violate storage quota
+            if storage_used + request.FILES['file'].size >= storage_max:
+                allow_upload = False
+            
+            if allow_upload == True:
+                write_file(request.FILES['file'], request.user)
+                return HttpResponseRedirect('/files')
+        
         else:
             print("invalid form sent")
+    
     else:
         form = UploadFileForm()
         
-    return render(request, 'files/upload.html', {"form":form})
+    return render(request, 'files/upload.html', {"form":form, "uploadAllowed":allow_upload})
 
 
+@login_required
+def download(request):
+    #check that user has not surpased download bandwidth
+    pass
