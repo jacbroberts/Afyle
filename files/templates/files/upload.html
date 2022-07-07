@@ -5,10 +5,17 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% if uploadAllowed%}
+
 <form method="POST" class="form-group" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Upload</button>
 </form>
+{% else %}
+
+<p>Not able to upload at this time. check <a href="/account">account</a> for usage limitations</p>
+
+{% endif %}
 
 {% endblock %}

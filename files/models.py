@@ -30,15 +30,4 @@ class UserStorageData(models.Model):
 #         "upload_date": "jdl"
 #         "size": "size",
 #         "type": "type"
-#     },
-#     {
-#         "name": "name",
-#         "size": "size",
-#         "type": "type"
-#     },
-#     {
-#         "name": "name",
-#         "size": "size",
-#         "type": "type"
-#     }
-# ]
+

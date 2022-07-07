@@ -76,7 +76,7 @@ def write_file(file, user):
     #file info
     new_file_name = file.name
     new_file_upload_date = datetime.datetime.now().strftime("%m/%d/%Y")
-    new_file_size = int(file.size)
+    new_file_size = int(file.size) #in future, may be rounded to 1kb if file is less than 1000 B
     new_file_type = str(file.content_type)
 
     new_file_entry = {
