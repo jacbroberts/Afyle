@@ -147,7 +147,7 @@ def download(request, username, id):
     user = UserStorageData.objects.get(user=request.user)
     true_username = user.get_username()
     for file in user.files:
-        if true_username + "/" + file['name'] == id:
+        if file['name'] == id and username == true_username:
             print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
