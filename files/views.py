@@ -151,5 +151,5 @@ def download(request, id):
             print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
-            response['X-Accel-Redirect'] = f'{username}/{file_name}'
+            response['X-Accel-Redirect'] = f'/download/{username}/{file_name}'
             return response
