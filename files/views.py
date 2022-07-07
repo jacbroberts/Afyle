@@ -150,5 +150,5 @@ def download(request, id):
         if username + " " + file['name'] == id:
             file_name = file['name']
             response = HttpResponse()
-            response['X-Accel-Redirect'] = f'/home/ubuntu/afyle/media/user/{file_name}'
+            response['X-Accel-Redirect'] = f'{username}/{file_name}'
             return response
