@@ -73,9 +73,9 @@ def write_file(file, user):
 
     new_file_entry = {
         "name": file.name,
-        "upload_data": datetime.time,
-        "size": file.size,
-        "type": file.content_type
+        "upload_data": datetime.datetime.now,
+        "size": str(file.size),
+        "type": str(file.content_type)
     }
 
     try:
