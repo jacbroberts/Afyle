@@ -66,26 +66,35 @@ def revalidate_storage():
     #check that actual storage usage matches db 
     pass
 
+
+
 def write_file(file, user):
     user_storage_data = UserStorageData.objects.get(user__exact=user)
     username = user.get_username()
-    print(username)
+
+
+    #file info
+    new_file_name = file.name
+    new_file_upload_date = datetime.datetime.now().strftime("%m/%d/%Y")
+    new_file_size = int(file.size)
+    new_file_type = str(file.content_type)
 
     new_file_entry = {
-        "name": file.name,
-        "upload_data": datetime.datetime.now().strftime("%m/%d/%Y"),
-        "size": str(file.size),
-        "type": str(file.content_type)
+        "name": new_file_name,
+        "upload_date": new_file_upload_date,
+        "size": new_file_size,
+        "type": new_file_type
     }
 
-    try:
-        if user_storage_data.files[0] == "NULL":
-            del user_storage_data.files[0]
-        user_storage_data.files.append(new_file_entry)
-        user_storage_data.save()
-        print(user_storage_data.files)
-    except Exception as e:
-        print(e)
+    user_storage_data.storage_used_B += new_file_size
+    user_storage_data.bandwidth_upload_used_kB += new_file_size/1000
+    
+    if user_storage_data.files[0] == "NULL":
+        del user_storage_data.files[0]
+    user_storage_data.files.append(new_file_entry)
+    
+    user_storage_data.save()
+    
     
     with open(f"/home/ubuntu/afyle/media/{username}/{file.name}", 'wb+') as destination:
         for chunck in file.chunks():
