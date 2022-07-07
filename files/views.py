@@ -1,5 +1,5 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -143,6 +143,12 @@ def upload(request):
 
 
 @login_required
-def download(request):
-    #check that user has not surpased download bandwidth
-    pass
+def download(request, id):
+    user = UserStorageData.objects.get(user=request.user)
+    username = user.get_username()
+    for file in user.files:
+        if username + " " + file['name'] == id:
+            file_name = file['name']
+            response = HttpResponse()
+            response['X-Accel-Redirect'] = f'/home/ubuntu/afyle/media/user/{file_name}'
+            return response
