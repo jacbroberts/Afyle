@@ -66,8 +66,6 @@ def revalidate_storage():
     #check that actual storage usage matches db 
     pass
 
-
-
 def write_file(file, user):
     user_storage_data = UserStorageData.objects.get(user__exact=user)
     username = user.get_username()
@@ -145,15 +143,22 @@ def upload(request):
 @login_required
 def download(request, username, filename):
     user = UserStorageData.objects.get(user=request.user)
-    print(user.user)
+    #check user's download bandwidth
+    if user.bandwidth_download_used_kB >= user.bandwidth_download_max_kB:
+        return HttpResponseRedirect('/files')
+    
     for file in user.files:
-        print(file['name'])
         if str(file['name']) == str(filename) and username == request.user.get_username():
-            print(f"file with matching id ({id}) found")
             file_name = file['name']
             response = HttpResponse()
             response['X-Accel-Redirect'] = f'/protected/{user.user}/{file_name}'
-            return response
 
-    print(f"user found no files called {filename}")
+            #update download bandwidth
+            user.bandwidth_download_used_kB += file['size']/1000
+
+            user.save()
+
+
+            return response
+    
     return HttpResponseRedirect('/files')
