@@ -7,7 +7,7 @@
 <p>Welcome {{user}} </p>
 
 {% for file in userStorage.files %}
-<p>{{ file.name }}</p>
+<a href="download/{{user}}/{{file.name}}">{{ file.name }}</a>
 {% endfor %}
 
 {% endblock %}
