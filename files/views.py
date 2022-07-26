@@ -33,7 +33,7 @@ def register(request):
             
             #add to UserStorageData class
             new_user = User.objects.get(username__exact=form.cleaned_data.get("username"))
-            newUserStorageData = UserStorageData(user=new_user, storgae_max_B=10000, bandwidth_upload_max_kB=10000, bandwidth_download_max=10000, files=["NULL"])
+            newUserStorageData = UserStorageData(user=new_user, storage_max_B=10000, bandwidth_upload_max_kB=10000, bandwidth_download_max_kB=10000, files=["NULL"])
             newUserStorageData.save()
 
             #create directory in /home/ubuntu/afyle/media/<username>
