@@ -11,7 +11,7 @@ class UserStorageData(models.Model):
     storage_used_B = models.PositiveBigIntegerField(default=0) #upto 9,223,372,036,854,775,807 B
     storage_max_B = models.PositiveBigIntegerField(default=0)
     
-    bandwidth_upload_used_kB = models.FloatField(default=0) #upto 2147483647 kB (~2 TB)
+    bandwidth_upload_used_kB = models.FloatField(default=0)
     bandwidth_upload_max_kB = models.FloatField(default=0)
     
     bandwidth_download_used_kB = models.FloatField(default=0)

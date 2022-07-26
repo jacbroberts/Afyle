@@ -33,7 +33,7 @@ def register(request):
             
             #add to UserStorageData class
             new_user = User.objects.get(username__exact=form.cleaned_data.get("username"))
-            newUserStorageData = UserStorageData(user=new_user, files=["NULL"])
+            newUserStorageData = UserStorageData(user=new_user, storgae_max_B=10000, bandwidth_upload_max_kB=10000, bandwidth_download_max=10000, files=["NULL"])
             newUserStorageData.save()
 
             #create directory in /home/ubuntu/afyle/media/<username>
@@ -56,15 +56,6 @@ def files(request):
 def account(request):
     user_storage_data = UserStorageData.objects.get(user__exact=request.user)
     return render(request, 'files/account.html', {"userStorage":user_storage_data})
-
-def media_access(request, path):
-    access_granted = False
-    user = request.user
-    return render(request, "files/index.html")
-
-def revalidate_storage():
-    #check that actual storage usage matches db 
-    pass
 
 def write_file(file, user):
     user_storage_data = UserStorageData.objects.get(user__exact=user)
@@ -138,7 +129,6 @@ def upload(request):
         form = UploadFileForm()
         
     return render(request, 'files/upload.html', {"form":form, "uploadAllowed":allow_upload})
-
 
 @login_required
 def download(request, username, filename):
