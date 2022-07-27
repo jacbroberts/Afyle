@@ -163,12 +163,17 @@ def status(request):
     user_count = 0
     for user in users:
         user_count += 1
+    
     storage = UserStorageData.objects.all()
+    
     storage_used = 0
+    upload = 0
+    download = 0
+    
     for user in storage:
         storage_used += user.storage_used_B
+        upload += user.bandwidth_upload_used_kB
+        download += user.bandwidth_download_used_kB
     
-    print(user_count)
-    print(storage_used)
 
-    return render(request, 'files/status.html')
+    return render(request, 'files/status.html', {"user_count": user_count, "storage_used":storage_used, "upload":upload, "download":download})

@@ -1,0 +1,15 @@
+{% extends "files/templates/files/base.html" %}
+
+{% block title %} Afyle - Status {% endblock %}
+
+{% block content %}
+
+<h1> Afyle </h1>
+<h2> Status </h2>
+
+<p>user count: {{ user_count }}</p>
+<p>storage used (B): {{ storage_used }}</p>
+<p>upload bandwidth used (kB): {{ upload }}</p>
+<p>download bandwidth used (kB): {{ download }}</p>
+
+{% endblock %}
