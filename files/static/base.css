@@ -1,3 +1,5 @@
+
+
 body {
     padding: 15px;
 }
@@ -41,19 +43,7 @@ body {
     margin-left: 25%;
 }
 
-table {
-    width: 100%;
-}
 
-th, td {
-    padding: 15px;
-    text-align: left;
-    
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
 
 @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {display: none;}
@@ -79,4 +69,18 @@ tr:nth-child(even) {
 
 html * {
   font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
