@@ -10,8 +10,8 @@ urlpatterns = [
     path('files', views.files),
     path('account', views.account),
     path('upload', views.upload, name='upload'),
-    path('download/<str:username>/<str:filename>', views.download, name='download')
-    path('status')
+    path('download/<str:username>/<str:filename>', views.download, name='download'),
+    path('status', views.status)
 
 ]
 
