@@ -6,10 +6,24 @@
 
 <h1> Afyle </h1>
 <h2> Status </h2>
+<table>
+    <tr>
+        <td>User Count</td>
+        <td>{{ user_count }}</td>
+    </tr>
+    <tr>
+        <td>Storage Used (B)</td>
+        <td>{{ storage_used }}</td>
+    </tr>
+    <tr>
+        <td>Upload Bandwidth Used (kB)</td>
+        <td>{{ upload }}</td>
+    </tr>
+    <tr>
+        <td>Download Bandwidth Used (kB)</td>
+        <td>{{ download }}</td>
+    </tr>
+</table>
 
-<p>user count: {{ user_count }}</p>
-<p>storage used (B): {{ storage_used }}</p>
-<p>upload bandwidth used (kB): {{ upload }}</p>
-<p>download bandwidth used (kB): {{ download }}</p>
 
 {% endblock %}
