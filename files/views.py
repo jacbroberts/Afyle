@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, staff_member_required
 from django.contrib import messages
 
 from files.models import UserStorageData
@@ -132,6 +132,8 @@ def upload(request):
 
 @login_required
 def download(request, username, filename):
+
+    
     user = UserStorageData.objects.get(user=request.user)
     #check user's download bandwidth
     if user.bandwidth_download_used_kB >= user.bandwidth_download_max_kB:
@@ -152,3 +154,15 @@ def download(request, username, filename):
             return response
     
     return HttpResponseRedirect('/files')
+
+@staff_member_required
+def status(request):
+    #display: # of users, storage used by users, u/d bandwidth used by users
+    # eventually: list of ips, monthly usage (storage/bandwidth/users)
+    users = User.objects.all()
+    storage = UserStorageData.objects.all()
+
+    print(users)
+    print(storage)
+
+    return render(request, 'files/status.html')
