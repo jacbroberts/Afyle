@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth.decorators import login_required, staff_member_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
 from files.models import UserStorageData
@@ -155,7 +155,7 @@ def download(request, username, filename):
     
     return HttpResponseRedirect('/files')
 
-@staff_member_required
+@user_passes_test(lambda u:u.is_staff)
 def status(request):
     #display: # of users, storage used by users, u/d bandwidth used by users
     # eventually: list of ips, monthly usage (storage/bandwidth/users)
