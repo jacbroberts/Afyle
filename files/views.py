@@ -160,9 +160,15 @@ def status(request):
     #display: # of users, storage used by users, u/d bandwidth used by users
     # eventually: list of ips, monthly usage (storage/bandwidth/users)
     users = User.objects.all()
+    user_count = 0
+    for user in users:
+        user_count += 1
     storage = UserStorageData.objects.all()
-
-    print(users)
-    print(storage)
+    storage_used = 0
+    for user in storage:
+        storage_used += user.storage_used_B
+    
+    print(user_count)
+    print(storage_used)
 
     return render(request, 'files/status.html')
