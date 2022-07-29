@@ -190,8 +190,10 @@ def groups(request):
                 print(e)
     else:
         form = NewGroupForm()
-
-    groups = request.user.groups
-    print(groups)
+    try:
+        groups = request.user.groups
+        print(groups)
+    except Exception as e:
+        print(e)
     
-    return render(request, 'files/groups.html')
+    return render(request, 'files/groups.html', {"groups":groups})

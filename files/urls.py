@@ -13,7 +13,7 @@ urlpatterns = [
     path('upload', views.upload, name='upload'),
     path('download/<str:username>/<str:filename>', views.download, name='download'),
     path('status', views.status),
-    path('group', views.groups),
+    path('groups', views.groups),
 
 ]
 

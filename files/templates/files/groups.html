@@ -10,8 +10,8 @@
     <button type="submit" class="btn btn-success">Create Group</button>
 </form>
 
-{% for file in userStorage.files %}
-<a href="download/{{user}}/{{file.name}}">{{ file.name }}</a>
+{% for group in groups %}
+<p>{{ group }}</p>
 {% endfor %}
 
 {% endblock %}
