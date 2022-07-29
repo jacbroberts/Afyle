@@ -185,13 +185,16 @@ def groups(request):
         if form.is_valid():
             try:
                 new_group, created = Group.objects.get_or_create(name=form.cleaned_data.get("name"))
+                if created:
+                    print("created already")
+                    
                 request.user.groups.add(new_group)
             except Exception as e:
                 print(e)
     else:
         form = NewGroupForm()
     try:
-        groups = request.user.groups
+        groups = request.user.groups()
         print(groups)
     except Exception as e:
         print(e)
