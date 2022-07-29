@@ -195,6 +195,10 @@ def groups(request):
                 add_owner.save()   
     else:
         form = NewGroupForm()
+
+        groups = UserPartyList.objects.filter(user=request.user)
+        for entry in groups:
+            parties += str(entry.party)
    
     
-    return render(request, 'files/groups.html', {"form":form, "groups":groups})
+    return render(request, 'files/groups.html', {"form":form, "groups":parties})
