@@ -23,7 +23,11 @@
             <a href="/" class="w3-bar-item w3-button">Afyle</a>
             <a href="/files" class="w3-bar-item w3-button">Files</a>
             <a href="/upload" class="w3-bar-item w3-button">Upload</a>
+            <a href="/groups" class="w3-bar-item w3-button"></a>
             <a href="/account" class="w3-bar-item w3-button">Account</a>
+            {% if user.is_staff %}
+            <a href="/status" class = "w3-bar-item w3-button">Status</a>
+            {% endif %}
             <a href="/logout" class="w3-bar-item w3-button">Logout</a>
             </div>
             <div class="margin-left25">

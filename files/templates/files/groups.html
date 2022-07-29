@@ -10,8 +10,19 @@
     <button type="submit" class="btn btn-success">Create Group</button>
 </form>
 
-{% for group in groups %}
-<p>{{ group }}</p>
-{% endfor %}
+
+
+<table>
+    <tr>
+        <th>Name</th>
+    </tr>
+    {% for group in groups %}
+    <tr>
+        <td>{{ group }}</td>
+    </tr>
+    
+    {% endfor %}
+
+</table>
 
 {% endblock %}
