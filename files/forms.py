@@ -14,6 +14,10 @@ class UploadFileForm(forms.Form):
     file = forms.FileField(required=True)
 
 
-
 class NewGroupForm(forms.Form):
    name = forms.CharField(required=True)
+
+
+class InviteUserToParty(forms.Form):
+    email = forms.EmailField()
+    name = forms.CharField()

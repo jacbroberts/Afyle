@@ -1,0 +1,28 @@
+{% extends "files/templates/files/file_base.html" %}
+
+{% block title %} Afyle - Groups {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Invite User</button>
+</form>
+
+
+
+<table>
+    <tr>
+        <th>Name</th>
+    </tr>
+    {% for users in partyUsers %}
+    <tr>
+        <td>{{ users }}</td>
+    </tr>
+    
+    {% endfor %}
+
+</table>
+
+{% endblock %}

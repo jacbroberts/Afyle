@@ -14,6 +14,6 @@ urlpatterns = [
     path('download/<str:username>/<str:filename>', views.download, name='download'),
     path('status', views.status),
     path('groups', views.groups),
-
+    path('groups/<str:name>', views.group_view)
 ]
 

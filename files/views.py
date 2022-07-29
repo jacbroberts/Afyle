@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
 from files.models import UserStorageData, Party, UserPartyList
-from .forms import NewUserForm, UploadFileForm, NewGroupForm
+from .forms import NewUserForm, UploadFileForm, NewGroupForm, InviteUserToParty
 from django.contrib.auth.models import User, Group
 
 import datetime
@@ -201,6 +201,25 @@ def groups(request):
         for entry in groups:
             parties.append(entry.party.name)
         
-   
-    
     return render(request, 'files/groups.html', {"form":form, "groups":parties})
+
+@login_required
+def group_view(request, name_):
+    
+    user_role_in_group = UserPartyList.objects.filter(user=request.user)
+    user_role_in_group = user_role_in_group.filter(party=name_)
+    user_role_in_group = user_role_in_group.role
+    if request.method == 'POST':
+        form = InviteUserToParty(request.POST)
+        if user_role_in_group == "owner" or user_role_in_group == "admin":
+            pass
+    else:
+        form = InviteUserToParty()
+        try:
+            party = Party.objects.get(name=name_)
+            users_in_party = UserPartyList.objects.filter(party=name_)
+            
+
+        except Party.DoesNotExist:
+            return HttpResponseRedirect('/groups')
+    return render(request, 'files/group_view.html', {"partyUsers":users_in_party, "form":form})
