@@ -205,21 +205,24 @@ def groups(request):
 
 @login_required
 def group_view(request, name_):
+    try:
     
-    user_role_in_group = UserPartyList.objects.filter(user=request.user)
-    user_role_in_group = user_role_in_group.filter(party=name_)
-    user_role_in_group = user_role_in_group.role
-    if request.method == 'POST':
-        form = InviteUserToParty(request.POST)
-        if user_role_in_group == "owner" or user_role_in_group == "admin":
-            pass
-    else:
-        form = InviteUserToParty()
-        try:
-            party = Party.objects.get(name=name_)
-            users_in_party = UserPartyList.objects.filter(party=name_)
-            
+        user_role_in_group = UserPartyList.objects.filter(user=request.user)
+        user_role_in_group = user_role_in_group.filter(party=name_)
+        user_role_in_group = user_role_in_group.role
+        if request.method == 'POST':
+            form = InviteUserToParty(request.POST)
+            if user_role_in_group == "owner" or user_role_in_group == "admin":
+                pass
+        else:
+            form = InviteUserToParty()
+            try:
+                party = Party.objects.get(name=name_)
+                users_in_party = UserPartyList.objects.filter(party=name_)
+                
 
-        except Party.DoesNotExist:
-            return HttpResponseRedirect('/groups')
-    return render(request, 'files/group_view.html', {"partyUsers":users_in_party, "form":form})
+            except Party.DoesNotExist:
+                return HttpResponseRedirect('/groups')
+        return render(request, 'files/group_view.html', {"partyUsers":users_in_party, "form":form})
+    except Exception as e:
+        print(e)
