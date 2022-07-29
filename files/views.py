@@ -201,7 +201,7 @@ def groups(request):
         for entry in groups:
             parties.append(entry.party.name)
         
-    return render(request, 'files/groups.html', {"form":form, "groups":parties})
+    return render(request, 'files/groups.html', {"form":form, "groups":groups})
 
 @login_required
 def group_view(request, name):
