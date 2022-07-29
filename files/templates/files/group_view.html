@@ -4,6 +4,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<h>{{ name }}</h>
+
 <form method="POST" class="form-group">
     {% csrf_token %}
     {{ form|crispy }}
@@ -15,10 +17,12 @@
 <table>
     <tr>
         <th>Users</th>
+        <th>Role</th>
     </tr>
-    {% for users in partyUsers %}
+    {% for user in partyUsers %}
     <tr>
-        <td>{{ users }}</td>
+        <td>{{ user.user.username }}</td>
+        <td>{{ user.role }}</td>
     </tr>
     
     {% endfor %}
