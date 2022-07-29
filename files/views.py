@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
-from files.models import UserStorageData
+from files.models import UserStorageData, Party, UserPartyList
 from .forms import NewUserForm, UploadFileForm, NewGroupForm
 from django.contrib.auth.models import User, Group
 
@@ -183,20 +183,18 @@ def groups(request):
     if request.method == 'POST':
         form = NewGroupForm(request.POST)
         if form.is_valid():
+            new_group_name = form.cleaned_data.get("name")
             try:
-                new_group, created = Group.objects.get_or_create(name=form.cleaned_data.get("name"))
-                if created:
-                    print("created already")
-                    
-                request.user.groups.add(new_group)
-            except Exception as e:
-                print(e)
+                Party.objects.get(name=new_group_name)
+                print("already exists")
+                return render(request, 'files/group_exists.html')
+            except Party.DoesNotExist:
+                new_group = Party(name=new_group_name)
+                new_group.save()
+                add_owner = UserPartyList(user=request.user, party=new_group, role="owner")        
+                add_owner.save()   
     else:
         form = NewGroupForm()
-    try:
-        groups = request.user.groups()
-        print(groups)
-    except Exception as e:
-        print(e)
+   
     
     return render(request, 'files/groups.html', {"form":form, "groups":groups})

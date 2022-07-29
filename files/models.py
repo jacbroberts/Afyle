@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import datetime
+
 # Create your models here.
 
 class UserStorageData(models.Model):
@@ -21,9 +23,7 @@ class UserStorageData(models.Model):
 
     def __str__(self):
         return self.user.username
-    
 
-    
 # files =[
 #     {
 #         "name": "name",
@@ -31,3 +31,18 @@ class UserStorageData(models.Model):
 #         "size": "size",
 #         "type": "type"
 
+class Party(models.Model):
+    name = models.CharField(required=True)
+    joinHow = models.CharField(default="invite")
+    codeHash = models.CharField(default="NULL")
+    codeSalt = models.CharField(default="NULL")
+
+    def __str__(self):
+        return self.name
+
+
+class UserPartyList(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    party = models.OneToOneField(Party, on_delete=models.CASCADE)
+    role = models.CharField(default="member")
+    date_joined = models.DateTimeField(default=datetime.datetime.now())
