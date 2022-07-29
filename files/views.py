@@ -197,8 +197,10 @@ def groups(request):
         form = NewGroupForm()
 
         groups = UserPartyList.objects.filter(user=request.user)
+        parties = []
         for entry in groups:
-            parties += str(entry.party)
+            parties.append(entry.party.name)
+        
    
     
     return render(request, 'files/groups.html', {"form":form, "groups":parties})
