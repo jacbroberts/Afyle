@@ -19,5 +19,5 @@ class NewGroupForm(forms.Form):
 
 
 class InviteUserToParty(forms.Form):
-    email = forms.EmailField()
-    name = forms.CharField()
+    email = forms.EmailField(required=False)
+    name = forms.CharField(required=False)

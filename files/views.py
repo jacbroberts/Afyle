@@ -210,6 +210,7 @@ def group_view(request, name):
         user_role_in_group = UserPartyList.objects.filter(user=request.user)
         user_role_in_group = user_role_in_group.get(party=party)
         user_role_in_group = user_role_in_group.role
+        print(user_role_in_group)
         if request.method == 'POST':
             form = InviteUserToParty(request.POST)
             if user_role_in_group == "owner" or user_role_in_group == "admin":
@@ -218,7 +219,11 @@ def group_view(request, name):
             form = InviteUserToParty()
             try:
                 
-                users_in_party = UserPartyList.objects.filter(party=party)
+                party_users = UserPartyList.objects.filter(party=party)
+                users_in_party = [] 
+                for user in party_users:
+                    users_in_party.append(user.user.username)
+                print(users_in_party)
                 
 
             except Party.DoesNotExist:
