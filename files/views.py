@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
 from files.models import UserStorageData
-from .forms import NewUserForm, UploadFileForm
-from django.contrib.auth.models import User
+from .forms import NewUserForm, UploadFileForm, NewGroupForm
+from django.contrib.auth.models import User, Group
 
 import datetime
 
@@ -177,3 +177,21 @@ def status(request):
     
 
     return render(request, 'files/status.html', {"user_count": user_count, "storage_used":storage_used, "upload":upload, "download":download})
+
+@login_required
+def groups(request):
+    if request.method == 'POST':
+        form = NewGroupForm(request.POST)
+        if form.is_valid():
+            try:
+                new_group, created = Group.objects.get_or_create(name=form.cleaned_data.get("name"))
+                request.user.groups.add(new_group)
+            except Exception as e:
+                print(e)
+    else:
+        form = NewGroupForm()
+
+    groups = request.user.groups
+    print(groups)
+    
+    return render(request, 'files/groups.html')

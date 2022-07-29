@@ -1,0 +1,17 @@
+{% extends "files/templates/files/file_base.html" %}
+
+{% block title %} Afyle - Groups {% endblock %}
+
+{% block content %}
+
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Create Group</button>
+</form>
+
+{% for file in userStorage.files %}
+<a href="download/{{user}}/{{file.name}}">{{ file.name }}</a>
+{% endfor %}
+
+{% endblock %}
