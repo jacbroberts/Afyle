@@ -32,7 +32,7 @@ class UserStorageData(models.Model):
 #         "type": "type"
 
 class Party(models.Model):
-    name = models.CharField(required=True)
+    name = models.CharField()
     joinHow = models.CharField(default="invite")
     codeHash = models.CharField(default="NULL")
     codeSalt = models.CharField(default="NULL")
