@@ -208,7 +208,7 @@ def group_view(request, name):
     try:
         party = Party.objects.get(name=name)
         user_role_in_group = UserPartyList.objects.filter(user=request.user)
-        user_role_in_group = user_role_in_group.filter(party=party)
+        user_role_in_group = user_role_in_group.get(party=party)
         user_role_in_group = user_role_in_group.role
         if request.method == 'POST':
             form = InviteUserToParty(request.POST)
