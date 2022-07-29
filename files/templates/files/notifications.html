@@ -1,0 +1,25 @@
+{% extends "files/templates/files/file_base.html" %}
+
+{% block title %} Afyle - Groups {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+    </tr>
+    {% for notification in notifications %}
+    <tr>
+        <td>{{ notification.title }}</td>
+        <td>{{ notification.description }}</td>
+        <td>{{ notification.time }}</td>
+    </tr>
+    
+    {% endfor %}
+
+</table>
+
+{% endblock %}

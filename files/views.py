@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
-from files.models import UserStorageData, Party, UserPartyList
+from files.models import UserStorageData, Party, UserPartyList, Notification
 from .forms import NewUserForm, UploadFileForm, NewGroupForm, InviteUserToParty
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 
 import datetime
 
@@ -225,3 +225,11 @@ def group_view(request, name):
             return HttpResponseRedirect('/groups')
     return render(request, 'files/group_view.html', {"partyUsers":users_in_party, "form":form, "name":name})
 
+@login_required
+def notifications(request):
+    if request.method == 'POST':
+        pass 
+    else:
+        notifications = Notification.objects.filter(user=request.user)
+
+    return render(request, 'files/notifications.html', {"notifications":notifications})

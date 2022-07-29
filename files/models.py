@@ -22,6 +22,10 @@ class UserStorageData(models.Model):
 
     files = models.JSONField(null=False, default=list)
 
+    notificationsOn = models.BooleanField(default=True)
+    notifTypes = models.JSONField(null=False, default=["NULL"])
+    
+
     def __str__(self):
         return self.user.username
 
@@ -47,3 +51,12 @@ class UserPartyList(models.Model):
     party = models.OneToOneField(Party, on_delete=models.CASCADE)
     role = models.CharField(default="member", max_length=256)
     date_joined = models.DateTimeField(default=timezone.now)
+
+class Notification(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    priority = models.PositiveIntegerField(default=1)
+    type = models.CharField(max_length=256)
+    time = models.DateTimeField(default=timezone.now)
+    title = models.CharField(max_length=256)
+    description = models.CharField(max_length=1024)
+
