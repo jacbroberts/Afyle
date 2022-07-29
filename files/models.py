@@ -23,8 +23,8 @@ class UserStorageData(models.Model):
     files = models.JSONField(null=False, default=list)
 
     notificationsOn = models.BooleanField(default=True)
-    notifTypes = models.JSONField(null=False, default=["NULL"])
-    
+    notifTypes = models.JSONField(null=False, default=list)
+
 
     def __str__(self):
         return self.user.username
