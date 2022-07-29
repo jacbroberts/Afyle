@@ -196,4 +196,4 @@ def groups(request):
     except Exception as e:
         print(e)
     
-    return render(request, 'files/groups.html', {"groups":groups})
+    return render(request, 'files/groups.html', {"form":form, "groups":groups})
