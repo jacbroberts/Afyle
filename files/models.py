@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 import datetime
 
@@ -45,4 +46,4 @@ class UserPartyList(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     party = models.OneToOneField(Party, on_delete=models.CASCADE)
     role = models.CharField(default="member")
-    date_joined = models.DateTimeField(default=datetime.datetime.now())
+    date_joined = models.DateTimeField(default=timezone.now)
