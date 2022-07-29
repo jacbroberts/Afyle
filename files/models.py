@@ -33,10 +33,10 @@ class UserStorageData(models.Model):
 #         "type": "type"
 
 class Party(models.Model):
-    name = models.CharField()
-    joinHow = models.CharField(default="invite")
-    codeHash = models.CharField(default="NULL")
-    codeSalt = models.CharField(default="NULL")
+    name = models.CharField(max_length=256)
+    joinHow = models.CharField(default="invite", max_length=256)
+    codeHash = models.CharField(default="NULL", max_length=256)
+    codeSalt = models.CharField(default="NULL", max_length=256)
 
     def __str__(self):
         return self.name
@@ -45,5 +45,5 @@ class Party(models.Model):
 class UserPartyList(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     party = models.OneToOneField(Party, on_delete=models.CASCADE)
-    role = models.CharField(default="member")
+    role = models.CharField(default="member", max_length=256)
     date_joined = models.DateTimeField(default=timezone.now)
