@@ -206,9 +206,9 @@ def groups(request):
 @login_required
 def group_view(request, name):
     try:
-    
+        party = Party.objects.get(name=name)
         user_role_in_group = UserPartyList.objects.filter(user=request.user)
-        user_role_in_group = user_role_in_group.filter(party=name)
+        user_role_in_group = user_role_in_group.filter(party=party)
         user_role_in_group = user_role_in_group.role
         if request.method == 'POST':
             form = InviteUserToParty(request.POST)
@@ -217,8 +217,8 @@ def group_view(request, name):
         else:
             form = InviteUserToParty()
             try:
-                party = Party.objects.get(name=name)
-                users_in_party = UserPartyList.objects.filter(party=name)
+                
+                users_in_party = UserPartyList.objects.filter(party=party)
                 
 
             except Party.DoesNotExist:
