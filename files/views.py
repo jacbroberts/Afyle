@@ -258,15 +258,14 @@ def kanbans(request, type, owner):
                         print("already exists")
                     else:
                         new_kanban = Kanban(type="user", user=request.user, title=new_title, description=form.cleaned_data.get("description"))
+                        new_kanban.save()
+                        
                 if type == "group" and is_party_member(request.user, owner):
                     if Kanban.objects.filter(type=type).filter(party=Party.get(name=owner)).filter(title=new_title).exists():
                         print("already exists")
                     else:
                         new_kanban = Kanban(type="group", party=Party.get(name=owner), title=new_title, description=form.cleaned_data.get("description"))
-                        
-                new_kanban.save()
-
-
+                        new_kanban.save()
         else:
             form = NewKanbanBoard()
             if type == "user":
@@ -276,7 +275,6 @@ def kanbans(request, type, owner):
                 kanban = Kanban.objects.filter(party=party)
     except Exception as e:
         print(e)
-        
     return render(request, 'files/kanbans.html', {"kanbans":kanban, "form":form, "type":type})
 
 @login_required

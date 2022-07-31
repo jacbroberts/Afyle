@@ -6,13 +6,15 @@
 
 <table>
     <tr>
-        <th>Kanban</th>
+        <th>Title</th>
+        <th>Description</th>
     </tr>
-    <tr>
     {% for kanban in kanbans %}
+    <tr>
         <td><a href="/kanban/{{type}}/{{user}}/{{kanban.title}}">{{ kanban.title }}</a></td>
-    {% endfor %}
+        <td>{{ kanban.description }}</td>
     </tr>
+    {% endfor %}
 
 </table>
 
