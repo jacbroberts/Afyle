@@ -79,7 +79,7 @@ class Kanban(models.Model):
             return f"{self.title}"
 
 class TaskColumn(models.Model):
-    kanban = models.OneToOneField(Kanban, on_delete=models.CASCADE)
+    kanban = models.ForeignKey(Kanban, on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     state = models.CharField(max_length=256, default="active")
     do_sort = models.BooleanField(default=False)
@@ -90,9 +90,12 @@ class TaskColumn(models.Model):
     archived_date = models.DateTimeField(blank=True, null=True)
     trash_date = models.DateTimeField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{str(self.kanban)}:{self.title}"
+
 class Task(models.Model):
-    kanban = models.OneToOneField(Kanban, on_delete=models.CASCADE)
-    column = models.OneToOneField(TaskColumn, on_delete=models.CASCADE)
+    kanban = models.ForeignKey(Kanban, on_delete=models.CASCADE)
+    column = models.ForeignKey(TaskColumn, on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     description = models.CharField(max_length=1024)
     state = models.CharField(max_length=256, default="active")
@@ -103,3 +106,6 @@ class Task(models.Model):
     priority = models.PositiveIntegerField(default=1)
     date_recorded = models.DateTimeField(default=timezone.now)
     date_due = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{str(self.column)}:{self.title}"
