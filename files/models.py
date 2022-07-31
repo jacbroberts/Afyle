@@ -66,7 +66,7 @@ class Notification(models.Model):
 class Kanban(models.Model):
     type = models.CharField(max_length=16)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    party = models.OneToOneField(Party, on_delete=models.CASCADE)
+    party = models.OneToOneField(Party, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=256)
     description = models.CharField(max_length=1024)
 
