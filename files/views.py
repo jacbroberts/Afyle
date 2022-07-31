@@ -256,7 +256,7 @@ def kanban(request, type, owner, title):
             if type == "group" and is_party_member(request.user, owner):
                 kanban = Kanban.objects.filter(party=owner)
             
-            kanban = kanban.filter(title=title)
+            kanban = kanban.get(title=title)
 
             kanban_task_columns = TaskColumns.objects.filter(kanban=kanban)
             kanban_tasks = Tasks.objects.filter(kanban=kanban)
