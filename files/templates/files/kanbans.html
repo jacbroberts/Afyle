@@ -1,6 +1,6 @@
 {% extends "files/templates/files/file_base.html" %}
 
-{% block title %} Afyle - {{ owner }}'s Kanban {% endblock %}
+{% block title %} Afyle - Kanbans {% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -10,8 +10,8 @@
 
 <table>
     <tr>
-    {% for kanban_column in kanban_columns %}
-        <th>{{ kanban_column.title }}</th>
+    {% for kanban in kanbans %}
+        <th>{{ kanban.title }}</th>
     {% endfor %}
     </tr>
 

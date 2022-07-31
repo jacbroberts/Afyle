@@ -246,6 +246,19 @@ def notifications(request):
     return render(request, 'files/notifications.html', {"notifications":notifications})
 
 @login_required
+def kanbans(request, type, owner):
+    if request.method == 'POST':
+        pass 
+    else:
+        if type == "user":
+            kanban = Kanban.objects.filter(user=request.user)
+        if type == "group" and is_party_member(request.user, owner):
+            party = Party.objects.get(name=owner)
+            kanban = Kanban.objects.filter(party=party)
+        
+    return render(request, 'files/kanbans.html', {"kanbans":kanban})
+
+@login_required
 def kanban(request, type, owner, title):
     try:
         if request.method == 'POST':
@@ -261,6 +274,6 @@ def kanban(request, type, owner, title):
             kanban_task_columns = TaskColumn.objects.filter(kanban=kanban)
             kanban_tasks = Task.objects.filter(kanban=kanban)
 
-        return render(request, 'files/kanban.html', {"kanban_columns":kanban_task_columns, "kanban_tasks":kanban_tasks})
+        return render(request, 'files/kanban.html', {"kanban_columns":kanban_task_columns, "kanban_tasks":kanban_tasks, "owner":owner})
     except Exception as e:
         print(e)
