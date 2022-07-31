@@ -16,6 +16,6 @@ urlpatterns = [
     path('groups', views.groups),
     path('groups/<str:name>', views.group_view),
     path('notifications', views.notifications),
-    path('kanban/<str:type>/<str:owner>/<str:title>')
+    path('kanban/<str:type>/<str:owner>/<str:title>', views.kanban)
 ]
 
