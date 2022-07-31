@@ -4,17 +4,24 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
-
-
-
 <table>
     <tr>
+        <th>Kanban</th>
+    </tr>
+    <tr>
     {% for kanban in kanbans %}
-        <th>{{ kanban.title }}</th>
+        <td><a href="/kanban/{{type}}/{{user}}/{{kanban.title}}">{{ kanban.title }}</a></td>
     {% endfor %}
     </tr>
 
 </table>
+
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Create Kanban</button>
+</form>
+
+
 
 {% endblock %}
