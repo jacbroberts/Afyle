@@ -25,6 +25,8 @@ class UserStorageData(models.Model):
     notificationsOn = models.BooleanField(default=True)
     notifTypes = models.JSONField(null=False, default=list)
 
+    task_count = models.PositiveBigIntegerField()
+
 
     def __str__(self):
         return self.user.username
@@ -59,4 +61,36 @@ class Notification(models.Model):
     time = models.DateTimeField(default=timezone.now)
     title = models.CharField(max_length=256)
     description = models.CharField(max_length=1024)
+    is_read = models.BooleanField(default=False)
 
+class Kanban(models.Model):
+    type = models.CharField(max_length=16)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    party = models.OneToOneField(Party, on_delete=models.CASCADE)
+    title = models.CharField(max_length=256)
+    description = models.CharField(max_length=1024)
+
+class TaskColumns(models.Model):
+    kanban = models.OneToOneField(Kanban, on_delete=models.CASCADE)
+    title = models.CharField(max_length=256)
+    state = models.CharField(max_length=256)
+    do_sort = models.BooleanField(default=False)
+    do_auto_archive = models.BooleanField(default=False)
+    archive_by = models.CharField(max_length=256)
+    task_count = models.PositiveBigIntegerField()
+    archived_date = models.DurationField()
+    trash_date = models.DateTimeField()
+
+class Tasks(models.Model):
+    kanban = models.OneToOneField(Kanban, on_delete=models.CASCADE)
+    column = models.OneToOneField(TaskColumns, on_delete=models.CASCADE)
+    title = models.CharField(max_length=256)
+    description = models.CharField(max_length=1024)
+    state = models.CharField(max_length=256)
+    do_auto_archive = models.BooleanField(default=False)
+    archive_by = models.CharField(max_length=256)
+    timeToArchive = models.DurationField()
+    countToArchive = models.PositiveIntegerField()
+    priority = models.PositiveIntegerField()
+    date_recorded = models.DateTimeField(default=timezone.now)
+    date_due = models.DateTimeField()

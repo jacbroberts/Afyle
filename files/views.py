@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
-from files.models import UserStorageData, Party, UserPartyList, Notification
+from files.models import UserStorageData, Party, UserPartyList, Notification, Kanban, TaskColumns, Tasks
 from .forms import NewUserForm, UploadFileForm, NewGroupForm, InviteUserToParty
 from django.contrib.auth.models import User
 
@@ -178,6 +178,17 @@ def status(request):
 
     return render(request, 'files/status.html', {"user_count": user_count, "storage_used":storage_used, "upload":upload, "download":download})
 
+def is_party_member(user, party_name):
+    party = Party.objects.get(name=party_name)
+    users_in_party = UserPartyList.objects.filter(party=party)
+    try:
+        users_in_party.get(user=user)
+        return True
+    except UserPartyList.DoesNotExist:
+        print("invalid user")
+        return False
+
+
 @login_required
 def groups(request):
     if request.method == 'POST':
@@ -233,3 +244,20 @@ def notifications(request):
         notifications = Notification.objects.filter(user=request.user)
 
     return render(request, 'files/notifications.html', {"notifications":notifications})
+
+@login_required
+def kanban(request, type, owner, title):
+    if request.method == 'POST':
+        pass 
+    else:
+        if type == "user":
+            kanban = Kanban.objects.filter(user=request.user)
+        if type == "group" and is_party_member(request.user, owner):
+            kanban = Kanban.objects.filter(party=owner)
+        
+        kanban = kanban.filter(title=title)
+
+        kanban_task_columns = TaskColumns.objects.filter(kanban=kanban)
+        kanban_tasks = Tasks.objects.filter(kanban=kanban)
+
+    return render(request, 'files/kanban.html', {"kanban_columns":kanban_task_columns, "kanban_tasks":kanban_tasks})
