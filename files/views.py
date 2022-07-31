@@ -247,17 +247,20 @@ def notifications(request):
 
 @login_required
 def kanban(request, type, owner, title):
-    if request.method == 'POST':
-        pass 
-    else:
-        if type == "user":
-            kanban = Kanban.objects.filter(user=request.user)
-        if type == "group" and is_party_member(request.user, owner):
-            kanban = Kanban.objects.filter(party=owner)
-        
-        kanban = kanban.filter(title=title)
+    try:
+        if request.method == 'POST':
+            pass 
+        else:
+            if type == "user":
+                kanban = Kanban.objects.filter(user=request.user)
+            if type == "group" and is_party_member(request.user, owner):
+                kanban = Kanban.objects.filter(party=owner)
+            
+            kanban = kanban.filter(title=title)
 
-        kanban_task_columns = TaskColumns.objects.filter(kanban=kanban)
-        kanban_tasks = Tasks.objects.filter(kanban=kanban)
+            kanban_task_columns = TaskColumns.objects.filter(kanban=kanban)
+            kanban_tasks = Tasks.objects.filter(kanban=kanban)
 
-    return render(request, 'files/kanban.html', {"kanban_columns":kanban_task_columns, "kanban_tasks":kanban_tasks})
+        return render(request, 'files/kanban.html', {"kanban_columns":kanban_task_columns, "kanban_tasks":kanban_tasks})
+    except Exception as e:
+        print(e)
