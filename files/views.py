@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
-from files.models import UserStorageData, Party, UserPartyList, Notification, Kanban, TaskColumns, Tasks
+from files.models import UserStorageData, Party, UserPartyList, Notification, Kanban, TaskColumn, Task
 from .forms import NewUserForm, UploadFileForm, NewGroupForm, InviteUserToParty
 from django.contrib.auth.models import User
 
@@ -258,8 +258,8 @@ def kanban(request, type, owner, title):
             
             kanban = kanban.get(title=title)
 
-            kanban_task_columns = TaskColumns.objects.filter(kanban=kanban)
-            kanban_tasks = Tasks.objects.filter(kanban=kanban)
+            kanban_task_columns = TaskColumn.objects.filter(kanban=kanban)
+            kanban_tasks = Task.objects.filter(kanban=kanban)
 
         return render(request, 'files/kanban.html', {"kanban_columns":kanban_task_columns, "kanban_tasks":kanban_tasks})
     except Exception as e:
