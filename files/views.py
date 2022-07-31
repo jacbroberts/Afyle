@@ -247,34 +247,37 @@ def notifications(request):
 
 @login_required
 def kanbans(request, type, owner):
-    if request.method == 'POST':
-        form = NewKanbanBoard(request.POST)
-        if form.is_valid():
-            new_title = form.cleaned_data.get("title")
-            
-            if type == "user":
-                if Kanban.objects.filter(type=type).filter(user=request.user).get(title=new_title):
-                    print("already exists")
-                else:
-                    new_kanban = Kanban(type="user", user=request.user, title=new_title, description=form.cleaned_data.get("description"))
-            if type == "group" and is_party_member(request.user, owner):
-                if Kanban.objects.filter(type=type).filter(party=Party.get(name=owner)).get(title=new_title):
-                    print("already exists")
-                else:
-                    new_kanban = Kanban(type="group", party=Party.get(name=owner), title=new_title, description=form.cleaned_data.get("description"))
-                    
-            new_kanban.save()
-            
+    try:
+        if request.method == 'POST':
+            form = NewKanbanBoard(request.POST)
+            if form.is_valid():
+                new_title = form.cleaned_data.get("title")
+                
+                if type == "user":
+                    if Kanban.objects.filter(type=type).filter(user=request.user).get(title=new_title):
+                        print("already exists")
+                    else:
+                        new_kanban = Kanban(type="user", user=request.user, title=new_title, description=form.cleaned_data.get("description"))
+                if type == "group" and is_party_member(request.user, owner):
+                    if Kanban.objects.filter(type=type).filter(party=Party.get(name=owner)).get(title=new_title):
+                        print("already exists")
+                    else:
+                        new_kanban = Kanban(type="group", party=Party.get(name=owner), title=new_title, description=form.cleaned_data.get("description"))
+                        
+                new_kanban.save()
 
-    else:
-        form = NewKanbanBoard()
-        if type == "user":
-            kanban = Kanban.objects.filter(user=request.user)
-        if type == "group" and is_party_member(request.user, owner):
-            party = Party.objects.get(name=owner)
-            kanban = Kanban.objects.filter(party=party)
+
+        else:
+            form = NewKanbanBoard()
+            if type == "user":
+                kanban = Kanban.objects.filter(user=request.user)
+            if type == "group" and is_party_member(request.user, owner):
+                party = Party.objects.get(name=owner)
+                kanban = Kanban.objects.filter(party=party)
+    except Exception as e:
+        print(e)
         
-    return render(request, 'files/kanbans.html', {"kanbans":kanban, "form":form})
+    return render(request, 'files/kanbans.html', {"kanbans":kanban, "form":form, "type":type})
 
 @login_required
 def kanban(request, type, owner, title):
