@@ -71,9 +71,9 @@ class Kanban(models.Model):
     description = models.CharField(max_length=1024)
 
     def __str__(self):
-        if type == "user":
+        if self.type == "user":
             return f"{self.user}:{self.title}"
-        elif type == "group":
+        elif self.type == "group":
             return f"{self.group}:{self.title}"
         else:
             return f"{self.title}"
@@ -81,14 +81,14 @@ class Kanban(models.Model):
 class TaskColumn(models.Model):
     kanban = models.OneToOneField(Kanban, on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
-    state = models.CharField(max_length=256)
+    state = models.CharField(max_length=256, default="active")
     do_sort = models.BooleanField(default=False)
     sort_by = models.CharField(max_length=16, default="M")
     do_auto_archive = models.BooleanField(default=False)
-    archive_by = models.CharField(max_length=256, blank=True)
+    archive_by = models.CharField(max_length=256, blank=True, null=True)
     task_count = models.PositiveBigIntegerField(default=0)
-    archived_date = models.DateTimeField(blank=True)
-    trash_date = models.DateTimeField(blank=True)
+    archived_date = models.DateTimeField(blank=True, null=True)
+    trash_date = models.DateTimeField(blank=True, null=True)
 
 class Task(models.Model):
     kanban = models.OneToOneField(Kanban, on_delete=models.CASCADE)
@@ -97,9 +97,9 @@ class Task(models.Model):
     description = models.CharField(max_length=1024)
     state = models.CharField(max_length=256, default="active")
     do_auto_archive = models.BooleanField(default=False)
-    archive_by = models.CharField(max_length=256, blank=True)
-    timeToArchive = models.DateTimeField(blank=True)
+    archive_by = models.CharField(max_length=256, blank=True, null=True)
+    timeToArchive = models.DateTimeField(blank=True, null=True)
     countToArchive = models.PositiveIntegerField(default=-1)
     priority = models.PositiveIntegerField(default=1)
     date_recorded = models.DateTimeField(default=timezone.now)
-    date_due = models.DateTimeField(blank=True)
+    date_due = models.DateTimeField(blank=True, null=True)
