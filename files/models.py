@@ -25,7 +25,7 @@ class UserStorageData(models.Model):
     notificationsOn = models.BooleanField(default=True)
     notifTypes = models.JSONField(null=False, default=list)
 
-    task_count = models.PositiveBigIntegerField()
+    task_count = models.PositiveBigIntegerField(default=0)
 
 
     def __str__(self):
@@ -77,7 +77,7 @@ class TaskColumns(models.Model):
     do_sort = models.BooleanField(default=False)
     do_auto_archive = models.BooleanField(default=False)
     archive_by = models.CharField(max_length=256)
-    task_count = models.PositiveBigIntegerField()
+    task_count = models.PositiveBigIntegerField(default=0)
     archived_date = models.DurationField()
     trash_date = models.DateTimeField()
 
@@ -90,7 +90,7 @@ class Tasks(models.Model):
     do_auto_archive = models.BooleanField(default=False)
     archive_by = models.CharField(max_length=256)
     timeToArchive = models.DurationField()
-    countToArchive = models.PositiveIntegerField()
-    priority = models.PositiveIntegerField()
+    countToArchive = models.PositiveIntegerField(default=-1)
+    priority = models.PositiveIntegerField(default=1)
     date_recorded = models.DateTimeField(default=timezone.now)
     date_due = models.DateTimeField()
